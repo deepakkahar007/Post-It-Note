@@ -18,6 +18,27 @@ def login():
 def register():
     return render_template("register.html")
 
+@app.route("/market")
+def market():
+
+    details=[
+        {
+            "name":"deepak",
+            "role":"developer",
+            "phn":70426
+        },
+        {
+            "name":"dk1",
+            "role":"front-end",
+            "phn":70092
+        }
+    ]
+    return render_template("market.html",d=details)
+    
+
+
+
+
 
 @app.route("/about/<user>")
 def dyn(user):
