@@ -1,12 +1,14 @@
+{% extends 'Layout.html' %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>market api</title>
+    <title>{% block title %} Flask - Market {% endblock %}</title>
   </head>
   <body>
+    {% block content %}
     <table>
       <thead>
         <tr>
@@ -17,14 +19,15 @@
       </thead>
 
       <tbody>
-        {% for item in d %}
+        {% for item in data %}
         <tr>
-          <td>{{item.name}}</td>
-          <td>{{item.role}}</td>
-          <td>{{item.phn}}</td>
+          <td>{{item.id}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.date_created}}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+    {% endblock %}
   </body>
 </html>
