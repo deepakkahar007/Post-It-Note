@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/main.css" />
-    <title>Sign In</title>
+    <title>{% block title %} Sign In {% endblock %}</title>
   </head>
   <body>
     {% block content %}
@@ -21,16 +21,13 @@
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" action="/" method="POST">
           <div>
-            <label
-              for="email"
-              class="block text-sm font-medium leading-6 text-gray-900"
+            <label class="block text-sm font-medium leading-6 text-gray-900"
               >Email address</label
             >
             <div class="mt-2">
               <input
-                id="email"
                 name="email"
                 type="email"
                 autocomplete="email"
@@ -42,22 +39,17 @@
 
           <div>
             <div class="flex items-center justify-between">
-              <label
-                for="password"
-                class="block text-sm font-medium leading-6 text-gray-900"
+              <label class="block text-sm font-medium leading-6 text-gray-900"
                 >Password</label
               >
               <div class="text-sm">
-                <a
-                  href="#"
-                  class="font-semibold text-indigo-600 hover:text-indigo-500"
+                <a class="font-semibold text-indigo-600 hover:text-indigo-500"
                   >Forgot password?</a
                 >
               </div>
             </div>
             <div class="mt-2">
               <input
-                id="password"
                 name="password"
                 type="password"
                 autocomplete="current-password"

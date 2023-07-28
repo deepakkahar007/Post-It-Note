@@ -10,6 +10,11 @@
   <body>
     {% block content %}
     <table>
+      {% if data|length %}
+
+      <p class="">No Record Found in Notes.db</p>
+
+      {% else %}
       <thead>
         <tr>
           <th>name</th>
@@ -25,9 +30,19 @@
           <td>{{item.email}}</td>
           <td>{{item.date_created}}</td>
         </tr>
-        {% endfor %}
+        {% endfor %} {% endif %}
+
+        <br />
       </tbody>
+      {% for i in user %}
+      <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.name}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.password}}</td>
+        <td>{{i.date_created}}</td>
+      </tr>
     </table>
-    {% endblock %}
+    {% endfor %} {% endblock %}
   </body>
 </html>

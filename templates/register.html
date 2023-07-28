@@ -7,58 +7,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/main.css" />
-    <title>Register User</title>
+    <title>{% block title %} Register User {% endblock %}</title>
   </head>
   <body>
     {% block content %}
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-      <div class="mb-4">
-        <label class="block text-grey-darker text-sm font-bold mb-2" for="Name">
-          Name
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-          id="name"
-          type="text"
-          placeholder="Enter your name"
-        />
+    <form action="/register" method="post">
+      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+        <div class="mb-4">
+          <label
+            class="block text-grey-darker text-sm font-bold mb-2"
+            for="Name"
+          >
+            Name
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            type="text"
+            placeholder="Enter your name"
+            name="name"
+          />
 
-        <label
-          class="block text-grey-darker text-sm font-bold mb-2"
-          for="username"
-        >
-          Username
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-          id="username"
-          type="text"
-          placeholder="Email"
-        />
+          <label
+            class="block text-grey-darker text-sm font-bold mb-2"
+            for="username"
+          >
+            Email
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            type="email"
+            placeholder="Enter Your Email"
+            name="email"
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            class="block text-grey-darker text-sm font-bold mb-2"
+            for="password"
+          >
+            Password
+          </label>
+          <input
+            class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+            type="password"
+            placeholder="Enter Your Password"
+            name="password"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            class="text-center w-full bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+            type="submit"
+          >
+            Create Account
+          </button>
+        </div>
       </div>
-      <div class="mb-6">
-        <label
-          class="block text-grey-darker text-sm font-bold mb-2"
-          for="password"
-        >
-          Password
-        </label>
-        <input
-          class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-          id="password"
-          type="password"
-          placeholder="Enter Your Password"
-        />
-      </div>
-      <div class="flex items-center justify-between">
-        <button
-          class="text-center w-full bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-          type="button"
-        >
-          Create Account
-        </button>
-      </div>
-    </div>
+    </form>
     {% endblock %}
   </body>
 </html>
