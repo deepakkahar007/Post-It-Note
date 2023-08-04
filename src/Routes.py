@@ -1,6 +1,7 @@
-from src import app,db 
-from flask import render_template,request
+from src import app,db, bcrypt
+from flask import render_template,request,redirect,url_for
 from src.Models import Note, User
+from src.forms import CreateNotes
 
 @app.route("/")
 def main():
@@ -8,25 +9,23 @@ def main():
 
 @app.route("/about")
 def about():
-    # new_data=Note(email="dk@outlook.com")
-    # db.session.add(new_data)
-    # db.session.commit()
     return render_template("about.html")
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    email=request.form['email']
-    password=request.form['password']
-
+    
     if request.method=="POST":
-        u=User.query.all()
-        print(email,password,u)
+        u=User.query.filter_by(email=request.form.get("email")).first()
+        compare_password=bcrypt.check_password_hash(u.password,request.form.get("password"))
+        if(compare_password): return redirect(url_for("main"))   
+
     return render_template("signin.html")
 
 @app.route("/register",methods=['GET','POST'])
 def register():
+
     if request.method=="POST":
-        new_user=User(name=request.form['name'],email=request.form['email'],password=request.form['password'])
+        new_user=User(name=request.form.get("name"),email=request.form.get("email"),password= bcrypt.generate_password_hash(request.form.get("password"),10).decode("utf-8"))
         db.session.add(new_user)
         db.session.commit()
 
@@ -35,12 +34,7 @@ def register():
 @app.route("/market")
 def market():
     all_data=Note.query.all()
-    all_user=User.query.all()
-    details = [
-        {"name": "deepak", "role": "developer", "phn": 70426},
-        {"name": "dk1", "role": "front-end", "phn": 70092},
-    ]
-    return render_template("market.html", d=details, data=all_data, user=all_user)
+    return render_template("market.html", data=all_data)
 
 
 @app.route("/delete/<int:id>")
@@ -51,6 +45,12 @@ def delete(id):
     return f"user deleted by id= {id} and name is {del_user.name}"
 
 
-@app.route("/notes")
+@app.route("/notes",methods=['GET','POST'])
 def notes():
-    return render_template("show.html")
+    form=CreateNotes()
+    if form.validate_on_submit():
+        notes_to_create=Note(title=form.title.data,description=form.description.data,category=form.category.data)
+        db.session.add(notes_to_create)
+        db.session.commit()
+        return redirect(url_for('market'))
+    return render_template("Notes.html",form=form)

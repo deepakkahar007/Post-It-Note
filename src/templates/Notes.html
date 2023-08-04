@@ -1,0 +1,39 @@
+{% extends 'Layout.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Notes {% endblock %}</title>
+  </head>
+  <body>
+    {% block content %}
+
+    <div class="container mx-auto mt-8">
+      <h1>Create Your Notes</h1>
+
+      <form action="" method="POST">
+        {{form.hidden_tag()}} {{form.title.label(class="block text-sm
+        font-medium text-gray-700")}}
+        <br />
+        {{ form.title(class="form-control w-full" ,placeholder="Enter Title")}}
+
+        <br />
+        <br />
+        {{ form.description.label() }} : {{form.description(class="" ,
+        placeholder="Enter Description")}}
+        <br />
+        <br />
+        {{form.category.label()}} : {{form.category(class="" ,
+        placeholder="Enter Category")}}
+
+        <br />
+        <br />
+        {{form.submit(class="w-full hover:bg-gray-800 ")}}
+      </form>
+    </div>
+
+    {% endblock %}
+  </body>
+</html>
