@@ -1,7 +1,8 @@
 from src import app,db, bcrypt
 from flask import render_template,request,redirect,url_for
 from src.Models import Note, User
-from src.forms import CreateNotes
+from src.forms import CreateNotes,RegisterUser,LoginUser
+from flask_login import login_user,logout_user,login_required
 
 @app.route("/")
 def main():
@@ -13,23 +14,35 @@ def about():
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    
+    form=LoginUser()
+
     if request.method=="POST":
         u=User.query.filter_by(email=request.form.get("email")).first()
-        compare_password=bcrypt.check_password_hash(u.password,request.form.get("password"))
-        if(compare_password): return redirect(url_for("main"))   
+        if(u):
+            compare_password=bcrypt.check_password_hash(u.password,request.form.get("password"))
+            if(not compare_password): return "pls check your password"
+            login_user(u)
+            return redirect(url_for("main"))
+        else:
+            return "pls check email and pssword then try again !!!"   
 
-    return render_template("signin.html")
+    return render_template("signin.html",form=form)
+
+@app.route("/logout",methods=["GET"])
+def logout():
+    logout_user()
+    return redirect(url_for("main"))
+
 
 @app.route("/register",methods=['GET','POST'])
 def register():
-
+    form=RegisterUser()
     if request.method=="POST":
         new_user=User(name=request.form.get("name"),email=request.form.get("email"),password= bcrypt.generate_password_hash(request.form.get("password"),10).decode("utf-8"))
         db.session.add(new_user)
         db.session.commit()
-
-    return render_template("register.html")
+        return redirect(url_for("login"))
+    return render_template("register.html",form=form)
 
 @app.route("/market")
 def market():
@@ -46,6 +59,7 @@ def delete(id):
 
 
 @app.route("/notes",methods=['GET','POST'])
+@login_required
 def notes():
     form=CreateNotes()
     if form.validate_on_submit():

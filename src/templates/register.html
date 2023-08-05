@@ -1,69 +1,31 @@
-{% extends 'Layout.html' %}
+{% extends 'Layout.html' %} {% block title %} Register User {% endblock %} {%
+block content %}
+<form action="/register" method="post">
+  <div class="bg-gray-900 shadow-md rounded px-8 pt-6 pb-8 flex flex-col">
+    <div class="mb-6">
+      {{form.hidden_tag()}} {{form.name.label(class="block text-white text-lg
+      font-bold mb-2")}} {{form.name(class="shadow appearance-none border
+      rounded w-full py-2 px-3 text-grey-darker",placeholder="Enter your
+      name")}}
+    </div>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/main.css" />
-    <title>{% block title %} Register User {% endblock %}</title>
-  </head>
-  <body>
-    {% block content %}
-    <form action="/register" method="post">
-      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-        <div class="mb-4">
-          <label
-            class="block text-grey-darker text-sm font-bold mb-2"
-            for="Name"
-          >
-            Name
-          </label>
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-            type="text"
-            placeholder="Enter your name"
-            name="name"
-          />
+    <div class="mb-6">
+      {{form.email.label(class="block text-white text-lg font-bold mb-2")}}
+      {{form.email(class="shadow appearance-none border rounded w-full py-2 px-3
+      text-grey-darker" ,placeholder="Enter your email")}}
+    </div>
 
-          <label
-            class="block text-grey-darker text-sm font-bold mb-2"
-            for="username"
-          >
-            Email
-          </label>
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-            type="email"
-            placeholder="Enter Your Email"
-            name="email"
-          />
-        </div>
-        <div class="mb-6">
-          <label
-            class="block text-grey-darker text-sm font-bold mb-2"
-            for="password"
-          >
-            Password
-          </label>
-          <input
-            class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-            type="password"
-            placeholder="Enter Your Password"
-            name="password"
-          />
-        </div>
-        <div class="flex items-center justify-between">
-          <button
-            class="text-center w-full bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-            type="submit"
-          >
-            Create Account
-          </button>
-        </div>
-      </div>
-    </form>
-    {% endblock %}
-  </body>
-</html>
+    <div class="mb-6">
+      {{form.password.label(class="block text-white text-lg font-bold mb-2")}}
+      {{form.password(class="shadow appearance-none border border-red rounded
+      w-full py-2 px-3 text-grey-darker mb-3", placeholder="******")}}
+    </div>
+
+    <div class="mb-6">
+      {{form.submit(class="text-center w-full bg-blue-500 hover:bg-blue-700
+      text-white font-bold py-2 px-4 rounded cursor-pointer")}}
+    </div>
+  </div>
+</form>
+
+{% endblock %}
