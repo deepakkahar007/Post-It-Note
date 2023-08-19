@@ -17,8 +17,9 @@ class User(db.Model,UserMixin):
 class Note(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     title=db.Column(db.String(length=100),nullable=False)
-    description=db.Column(db.String(length=500),nullable=True)
-    category=db.Column(db.String(length=30),default="other")
+    description=db.Column(db.String(),nullable=True)
+    label=db.Column(db.String,default="other")
+    isPinned=db.Column(db.Boolean,default=False)
     Created_At=db.Column(db.DateTime,default=datetime.utcnow())
     Updated_At=db.Column(db.DateTime,default=datetime.utcnow())
     Created_By=db.Column(db.Integer(),db.ForeignKey('user.id'))

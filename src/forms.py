@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,EmailField,PasswordField
+from wtforms import StringField,SubmitField,EmailField,PasswordField,TextAreaField,SelectField
 from wtforms.validators import Length,DataRequired
 
 class CreateNotes(FlaskForm):
-    title=StringField(label='Title : ',validators=[ DataRequired(),Length(max=30)] )
-    description=StringField(label='Description : ',validators=[DataRequired(),])
-    category=StringField(label='Category : ')    
+    title=StringField(label='Title:',validators=[ DataRequired(),Length(max=30)] )
+    description=TextAreaField(label='Description:',validators=[DataRequired(),])
+    label=StringField(label="Label:")  
     submit=SubmitField(label='Submit')
 
 class RegisterUser(FlaskForm):

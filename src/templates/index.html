@@ -1,6 +1,29 @@
-{% extends 'Layout.html' %} {% block title %} App {%endblock%} {% block content
-%}
+{% extends 'Layout.html' %} {% block title %} Post-It-Note {%endblock%} {% block
+content %}
 <div class="p-8">
-  <h1>Home page</h1>
+  <section class="container mx-auto my-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-3xl font-semibold mb-4">Organize Your Notes</h2>
+        <p class="text-gray-600 mb-6">
+          Keep track of your ideas, tasks, and important information with our
+          easy-to-use note-taking app.
+        </p>
+        <a
+          href="{{url_for('login')}}"
+          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition duration-300 ease-in-out"
+          >Get Started</a
+        >
+      </div>
+      <div>
+        <img
+          loading="lazy"
+          src="../static/notes-2.png"
+          alt="Note Taking"
+          class="w-2/3 h-auto rounded-lg shadow-lg"
+        />
+      </div>
+    </div>
+  </section>
 </div>
 {% endblock %}

@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/main.css" />
+    <link
+      rel="shortcut icon"
+      href="../static/logo-16.png"
+      type="image/x-icon"
+    />
     <title>Flask - {% block title %} {% endblock %}</title>
   </head>
   <body>
@@ -22,17 +27,14 @@
         <nav
           class="md:ml-auto flex flex-wrap items-center text-base justify-center"
         >
-          <a
-            href="{{url_for('market')}}"
-            class="mr-5 hover:text-white text-black"
-            >Market page</a
+          {% if current_user.is_authenticated %}
+
+          <a href="{{url_for('all_notes')}}" class="mr-5 hover:text-white"
+            >My Notes</a
           >
+          {% endif %}
           <a href="{{url_for('notes')}}" class="mr-5 hover:text-white"
             >Create Notes</a
-          >
-          <a class="mr-5 hover:text-white">Fourth Link</a>
-          <a href="{{ url_for('about')}}" class="mr-5 hover:text-white"
-            >About page</a
           >
         </nav>
 
@@ -59,7 +61,7 @@
     </header>
 
     <!-- main content -->
-    <main>{% block content %} {% endblock %}</main>
+    <main class="container">{% block content %} {% endblock %}</main>
     <!-- footer -->
     <footer class="text-gray-400 bg-gray-900 body-font">
       <div
@@ -68,20 +70,11 @@
         <a
           class="flex title-font font-medium items-center md:justify-start justify-center text-white"
         >
-          <span class="ml-3 text-xl">Tailblocks</span>
+          <span class="ml-3 text-xl">Post-It-Note</span>
         </a>
-        <p
-          class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4"
-        >
-          © 2020 Tailblocks —
-          <a
-            href="https://twitter.com/knyttneve"
-            class="text-gray-500 ml-1"
-            target="_blank"
-            rel="noopener noreferrer"
-            >@knyttneve</a
-          >
-        </p>
+        <div class="mx-auto text-center">
+          <p class="text-xs">&copy; 2023 Notes App. All rights reserved.</p>
+        </div>
         <span
           class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
         >

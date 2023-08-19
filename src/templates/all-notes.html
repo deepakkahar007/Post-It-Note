@@ -1,0 +1,90 @@
+{% extends 'Layout.html' %} {% block title %} Notes {% endblock %} {% block
+content %} {% if data|length %} {% for item in data %}
+<div class="bg-gray-900">
+  <div
+    class="shadow-lg mx-auto container py-4 px-6 bg-gray-800 border max-w-4xl rounded-lg hover:border-blue-700"
+  >
+    <div class="flex justify-end">
+      <a href="/delete/{{item.id}}" class="rounded-full bg-red-500 mr-2">
+        <img class="p-1 text-xs h-8 w-8" src="../static/trash.svg" />
+      </a>
+      <a href="/update/{{item.id}}" class="rounded-full bg-blue-500 mr-2">
+        <img class="p-1 text-xs h-8 w-8" src="../static/edit.svg" />
+      </a>
+
+      {% if item.isPinned %}
+      <a href="/pinned/{{item.id}}" class="rounded-full mr-2 bg-white">
+        <img class="p-1 text-xs h-8 w-8" src="../static/pin.png" />
+      </a>
+      {% else %}
+      <a href="/pinned/{{item.id}}" class="rounded-full mr-2 text-white">
+        <img class="p-1 text-xs h-8 w-8" src="../static/pin.png" />
+      </a>
+      {% endif %}
+    </div>
+    <div class="flex justify-start" id="openModalButton">
+      <h3 class="text-white font-extrabold text-xl">{{item.title}}</h3>
+    </div>
+    <div class="text-white">
+      <p>{{item.description}}</p>
+    </div>
+    <div class="flex">
+      {% if item.Created_At < item.Updated_At %}
+      <p
+        class="text-gray-400 text-xs text-opacity-70 font-sans border rounded-full max-w-xs p-2 border-gray-500 justify-start"
+      >
+        Last Updated At - {{item.Updated_At.strftime('%Y-%m-%d %H:%M')}}
+      </p>
+      {% else %}
+
+      <p
+        class="text-white text-xs font-sans border rounded-full max-w-xs p-2 border-gray-500 justify-start"
+      >
+        Date Created - {{item.Created_At}}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div
+  id="myModal"
+  class="fixed inset-0 flex items-center justify-center z-50 hidden"
+>
+  <div class="absolute inset-0 bg-black opacity-60"></div>
+  <div class="bg-white p-6 rounded-lg shadow-lg z-10 w-1/3">
+    <p class="text-sm text-gray-500 underline">{{item.label}}</p>
+    <h2 class="text-xl font-semibold mb-4">{{item.title}}</h2>
+    <p class="text-gray-600 mb-4 text-base">{{item.description}}</p>
+    <p class="text-gray-600 mb-4 text-sm">
+      last updated at - {{item.Updated_At.strftime('%Y-%m-%d %H:%M')}}
+    </p>
+
+    <button
+      id="closeModalButton"
+      class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg"
+    >
+      Close
+    </button>
+  </div>
+</div>
+{% endfor %} {% else %}
+<p class="">No Record Found in Notes.db</p>
+<br />
+{% endif %}
+
+<script>
+  const openModalButton = document.getElementById("openModalButton");
+  const closeModalButton = document.getElementById("closeModalButton");
+  const modal = document.getElementById("myModal");
+
+  openModalButton.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+
+  closeModalButton.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+</script>
+{% endblock %}

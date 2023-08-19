@@ -2,15 +2,13 @@ from src import app,db, bcrypt
 from flask import render_template,request,redirect,url_for
 from src.Models import Note, User
 from src.forms import CreateNotes,RegisterUser,LoginUser
-from flask_login import login_user,logout_user,login_required
+from flask_login import login_user,logout_user,login_required,current_user
+from datetime import datetime
+
 
 @app.route("/")
 def main():
     return render_template("index.html")
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
 
 @app.route("/login",methods=['GET','POST'])
 def login():
@@ -33,7 +31,6 @@ def logout():
     logout_user()
     return redirect(url_for("main"))
 
-
 @app.route("/register",methods=['GET','POST'])
 def register():
     form=RegisterUser()
@@ -44,27 +41,51 @@ def register():
         return redirect(url_for("login"))
     return render_template("register.html",form=form)
 
-@app.route("/market")
-def market():
+@app.route("/all-notes")
+def all_notes():
     all_data=Note.query.all()
-    return render_template("market.html", data=all_data)
-
+    return render_template("all-notes.html", data=all_data)
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    del_user=User.query.filter_by(id=id).first()
-    db.session.delete(del_user)
+    del_note=Note.query.filter_by(id=id).first()
+    db.session.delete(del_note)
     db.session.commit()
-    return f"user deleted by id= {id} and name is {del_user.name}"
-
+    return redirect(url_for("all_notes"))
 
 @app.route("/notes",methods=['GET','POST'])
 @login_required
 def notes():
     form=CreateNotes()
     if form.validate_on_submit():
-        notes_to_create=Note(title=form.title.data,description=form.description.data,category=form.category.data)
+        notes_to_create=Note(title=form.title.data,description=form.description.data,label=form.label.data,Created_By=current_user.id)
         db.session.add(notes_to_create)
         db.session.commit()
-        return redirect(url_for('market'))
+        return redirect(url_for('all_notes'))
     return render_template("Notes.html",form=form)
+
+
+@app.route("/update/<int:id>",methods=["POST","GET"])
+def update(id):
+    up_id=Note.query.filter_by(id=id).first()
+    form=CreateNotes(request.form,obj=up_id)
+    if request.method=="POST" and form.validate_on_submit:
+        form.populate_obj(up_id)
+        up_id.Updated_At=datetime.utcnow()
+        db.session.commit()
+        return redirect(url_for('all_notes'))
+    
+    return render_template("Notes.html",form=form)
+
+@app.route("/pinned/<int:id>")
+def pinned(id):
+    pin_id=Note.query.filter_by(id=id).first()
+    if pin_id.isPinned==False:
+        pin_id.isPinned=True
+        db.session.commit()
+    else:
+        pin_id.isPinned=False
+        db.session.commit()
+        
+    return redirect(url_for("all_notes"))
+
