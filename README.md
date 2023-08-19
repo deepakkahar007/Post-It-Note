@@ -13,3 +13,43 @@ With the Post-It note, people can now jot things down anywhere, without the fear
 **Server:** Flask
 
 **Database:** SQLite3
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/deepakkahar007/Post-It-Note.git
+```
+
+Go to the project directory
+
+```bash
+  cd Post-It-Note
+```
+
+Install dependencies
+
+To install Tailwindcss
+
+```bash
+  npm install
+```
+
+To install python dependencies
+
+```bash
+pip install -r requriements.txt
+```
+
+Start the server
+
+```bash
+  python App.py
+```
+
+make sure that your python environment activated...
+
+## Contributing
+
+Contributions are always welcome!
